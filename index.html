@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pudim da Laura - Cardápio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Paleta de cores baseada na imagem enviada */
+            --bg-color: #D9832E; /* Ocre/Caramelo Claro */
+            --card-bg: #5E3023; /* Marrom Café Escuro */
+            --text-color: #FDF5E6; /* Creme suave */
+            --accent-color: #F4C430; /* Amarelo Pudim */
+            --price-color: #E89635; /* Laranja destaque */
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--card-bg);
+            line-height: 1.6;
+        }
+
+        /* Efeito de cobertura/calda no topo */
+        .header-wave {
+            background-color: var(--card-bg);
+            padding: 2rem 1rem 4rem 1rem;
+            text-align: center;
+            border-bottom-left-radius: 50% 20%;
+            border-bottom-right-radius: 50% 20%;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .logo-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px auto;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid var(--accent-color);
+            overflow: hidden;
+        }
+
+        .logo-container img {
+            max-width: 90%;
+            height: auto;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: var(--text-color);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        /* Container Principal */
+        .main-container {
+            max-width: 800px;
+            margin: -30px auto 0 auto;
+            padding: 0 1rem 4rem 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Título "Cardápio" */
+        .menu-title {
+            font-family: 'Pacifico', cursive;
+            text-align: center;
+            font-size: 3rem;
+            color: var(--white);
+            margin-bottom: 2rem;
+            transform: rotate(-3deg);
+            text-shadow: 3px 3px 0px var(--card-bg);
+        }
+
+        /* Grid do Menu */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Cartão do Produto */
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            color: var(--text-color);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Foto do produto com formato de flor estilizado */
+        .product-img-box {
+            flex-shrink: 0;
+            width: 100px;
+            height: 100px;
+            background-color: var(--white);
+            /* Clip-path cria a forma ondulada de flor vista na imagem */
+            clip-path: circle(50% at 50% 50%); 
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            flex-grow: 1;
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--accent-color);
+            font-weight: 400;
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .price-tag {
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: var(--price-color);
+        }
+
+        .weight-tag {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            display: block;
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--card-bg);
+            font-weight: bold;
+        }
+
+        /* Botão Flutuante do WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="header-wave">
+        <div class="logo-container">
+            <img src="logo.jpg" alt="Logo Pudim da Laura">
+        </div>
+        <h1>Pudim da Laura</h1>
+        <p class="subtitle">O sabor caseiro que você ama</p>
+    </header>
+
+    <div class="main-container">
+        <h2 class="menu-title">Cardápio</h2>
+
+        <div class="menu-grid">
+            
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="no-picture.jpg" alt="Geladinho de Pudim">
+                </div>
+                <div class="product-info">
+                    <h3>Geladinho de Pudim</h3>
+                    <p class="product-desc">Cremoso e refrescante, com o sabor autêntico do nosso pudim.</p>
+                    <span class="price-tag">R$ 10,00</span>
+                    <span class="weight-tag">Unidade</span>
+                </div>
+            </div>
+
+             <div class="product-card">
+                <div class="product-img-box">
+                    <img src="no-picture.jpg" alt="Geladinho de Chocolate Branco com Morango">
+                </div>
+                <div class="product-info">
+                    <h3>Geladinho de Choc. Branco com Morango</h3>
+                    <p class="product-desc"></p>
+                    <span class="price-tag">R$ 10,00</span>
+                    <span class="weight-tag">Unidade</span>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="picole-branco.jpg" alt="Picolé de Pudim com Chocolate Branco Crocante">
+                </div>
+                <div class="product-info">
+                    <h3>Picolé de Pudim com Choc. Branco Crocante</h3>
+                    <p class="product-desc"></p>
+                    <span class="price-tag">R$ 14,00</span>
+                    <span class="weight-tag">Unidade</span>
+                </div>
+            </div>
+
+             <div class="product-card">
+                <div class="product-img-box">
+                    <img src="no-picture.jpg" alt="Picolé de Pudim de Chocolate Meio Amargo">
+                </div>
+                <div class="product-info">
+                    <h3>Picolé de Pudim de Choc. Meio Amargo</h3>
+                    <p class="product-desc"></p>
+                    <span class="price-tag">R$ 14,00</span>
+                    <span class="weight-tag">Unidade</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="pudim.jpg" alt="Pudim de Leite Condensado">
+                </div>
+                <div class="product-info">
+                    <h3>Pudim de Leite Condensado</h3>
+                    <p class="product-desc">O clássico, lisinho e sem furinhos.</p>
+                    <span class="price-tag">R$ 60,00</span>
+                    <span class="weight-tag">Unidade</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="pudim-branco.jpg" alt="Pudim de Chocolate Branco">
+                </div>
+                <div class="product-info">
+                    <h3>Pudim de Choc. Branco</h3>
+                    <p class="product-desc">Com calda de morango artesanal.</p>
+                    <span class="price-tag">R$ 85,00</span>
+                    <span class="weight-tag">Unidade</span>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="no-picture.jpg" alt="Geladinho de Ninho com Nutella">
+                </div>
+                <div class="product-info">
+                    <h3>Geladinho de Ninho com Nutella</h3>
+                    <p class="product-desc"></p>
+                    <span class="price-tag">R$ 10,00</span>
+                    <span class="weight-tag">Unidade</span>
+                </div>
+            </div>
+
+             <div class="product-card">
+                <div class="product-img-box">
+                    <img src="no-picture.jpg" alt="Geladinho de Maracujá">
+                </div>
+                <div class="product-info">
+                    <h3>Geladinho de Maracujá</h3>
+                    <p class="product-desc"></p>
+                    <span class="price-tag">R$ 10,00</span>
+                    <span class="weight-tag">Unidade</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Feito com amor ❤️ Pudim da Laura</p>
+        <p>Entregas em Goianira e região</p>
+    </footer>
+
+    <a href="https://wa.me/5562996974686" class="whatsapp-float" target="_blank">
+        <svg fill="#fff" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="30px" height="30px"><path d="M 12.011719 2 C 6.5057187 2 2.0234844 6.478375 2.0214844 11.984375 C 2.0204844 13.744375 2.4814687 15.462563 3.3554688 16.984375 L 2 22 L 7.2324219 20.664062 C 8.6914219 21.459063 10.332063 21.877 12.013672 21.877 L 12.015625 21.877 C 17.521625 21.877 22.001953 17.395344 22.003906 11.888672 C 22.003906 9.2506719 20.976859 6.7686094 19.109375 4.9042969 C 17.241891 3.0379844 14.759719 2.0010469 12.011719 2 z M 12.013672 3.6699219 C 14.316672 3.6699219 16.398672 4.5445781 17.962891 6.1074219 C 19.529109 7.6722656 20.386719 9.7523281 20.384766 11.890625 C 20.382766 16.476625 16.634609 20.207031 12.015625 20.207031 C 10.518625 20.207031 9.0718594 19.829984 7.7871094 19.123047 L 7.4726562 18.951172 L 4.3984375 19.736328 L 5.2167969 16.744141 L 4.8828125 16.398438 C 4.0908125 15.138437 3.6877969 13.585547 3.6894531 11.986328 C 3.6914531 7.3983281 7.4286719 3.6699219 12.013672 3.6699219 z"/></svg>
+    </a>
+
+</body>
+</html>
