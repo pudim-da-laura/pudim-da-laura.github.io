@@ -3,21 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pudim da Laura - Cardápio</title>
+    <title>Pudim da Laura - Cardápio de Natal</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <!-- Adicionando FontAwesome para ícones natalinos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
         :root {
-            /* Paleta de cores baseada na imagem enviada */
+            /* Paleta Original */
             --bg-color: #D9832E; /* Ocre/Caramelo Claro */
             --card-bg: #5E3023; /* Marrom Café Escuro */
             --text-color: #FDF5E6; /* Creme suave */
             --accent-color: #F4C430; /* Amarelo Pudim */
-            --price-color: #E89635; /* Laranja destaque */
-            --white: #ffffff;
+            
+            /* Paleta de Natal (Complementar) */
+            --xmas-red: #C41E3A; /* Vermelho Natalino */
+            --xmas-green: #2F5233; /* Verde Pinheiro */
+            --xmas-gold: #FFD700; /* Dourado */
+            --snow: #ffffff;
         }
 
         * {
@@ -29,56 +35,167 @@
         body {
             font-family: 'Fredoka', sans-serif;
             background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                radial-gradient(circle at 30% 20%, rgba(255,255,255,0.1) 2px, transparent 2px);
+            background-size: 100px 100px, 150px 150px;
             color: var(--card-bg);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Efeito de cobertura/calda no topo */
+        /* Efeito de Neve Caindo (CSS Puro) */
+        .snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1em;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0.2; }
+        }
+
+        /* Luzes de Natal no Topo */
+        .christmas-lights {
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            position: absolute;
+            top: -10px;
+            width: 100%;
+            z-index: 10;
+            padding: 0;
+            pointer-events: none;
+        }
+
+        .light-bulb {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin: 0 15px;
+            background: var(--text-color);
+            position: relative;
+            animation: flash 2s infinite alternate;
+        }
+
+        .light-bulb::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 3px;
+            width: 6px;
+            height: 6px;
+            background: #222;
+        }
+
+        .light-bulb:nth-child(odd) { animation-duration: 1.5s; background: var(--xmas-red); box-shadow: 0 2px 10px var(--xmas-red); }
+        .light-bulb:nth-child(even) { animation-duration: 2.2s; background: var(--xmas-green); box-shadow: 0 2px 10px var(--xmas-green); }
+        .light-bulb:nth-child(3n) { animation-duration: 1.8s; background: var(--xmas-gold); box-shadow: 0 2px 10px var(--xmas-gold); }
+
+        @keyframes flash {
+            0%, 100% { opacity: 1; transform: scale(1.1); }
+            50% { opacity: 0.5; transform: scale(0.9); }
+        }
+
+        /* Header Modificado */
         .header-wave {
             background-color: var(--card-bg);
-            padding: 2rem 1rem 4rem 1rem;
+            /* Adicionando um degradê sutil natalino */
+            background: linear-gradient(to bottom, var(--card-bg), #4a251b);
+            padding: 3rem 1rem 5rem 1rem; /* Aumentei o padding top por causa das luzes */
             text-align: center;
             border-bottom-left-radius: 50% 20%;
             border-bottom-right-radius: 50% 20%;
             position: relative;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-bottom: 5px solid var(--xmas-red); /* Borda festiva */
         }
 
         .logo-container {
-            width: 150px;
-            height: 150px;
+            width: 160px;
+            height: 160px;
             margin: 0 auto 15px auto;
             background: var(--white);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 4px solid var(--accent-color);
-            overflow: hidden;
+            border: 4px solid var(--xmas-gold); /* Borda dourada no natal */
+            overflow: visible; /* Permitir o gorro sair */
+            position: relative;
+            background-color: #fff;
+        }
+
+        /* Gorro de Papai Noel no Logo */
+        .santa-hat-logo {
+            position: absolute;
+            top: -25px;
+            right: -10px;
+            font-size: 3.5rem;
+            color: var(--xmas-red);
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+            transform: rotate(15deg);
+            z-index: 5;
         }
 
         .logo-container img {
             max-width: 100%;
-            height: auto;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            /* Clip path para garantir que a imagem fique redonda dentro da borda */
+            clip-path: circle(50% at 50% 50%);
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
             color: var(--text-color);
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+            position: relative;
+            display: inline-block;
+        }
+        
+        /* Azevinho ao lado do título */
+        h1::after {
+            content: '\f7e0'; /* Holly berry icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--xmas-green);
+            position: absolute;
+            top: -10px;
+            right: -25px;
+            transform: rotate(20deg);
         }
 
         .subtitle {
             color: var(--accent-color);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
         /* Container Principal */
         .main-container {
             max-width: 800px;
-            margin: -30px auto 0 auto;
+            margin: -40px auto 0 auto;
             padding: 0 1rem 4rem 1rem;
             position: relative;
             z-index: 2;
@@ -88,14 +205,13 @@
         .menu-title {
             font-family: 'Pacifico', cursive;
             text-align: center;
-            font-size: 3rem;
-            color: var(--white);
+            font-size: 3.5rem;
+            color: var(--snow);
             margin-bottom: 2rem;
             transform: rotate(-3deg);
-            text-shadow: 3px 3px 0px var(--card-bg);
+            text-shadow: 3px 3px 0px var(--xmas-red), 5px 5px 10px rgba(0,0,0,0.3);
         }
 
-        /* Grid do Menu */
         .menu-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -116,22 +232,36 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             transition: transform 0.3s ease;
             color: var(--text-color);
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
         }
+
+        /* Decoração de neve no topo do card */
+        /* .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background-color: var(--snow);
+            opacity: 0.8;
+        } */
 
         .product-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(196, 30, 58, 0.2); /* Sombra vermelha sutil */
         }
 
-        /* Foto do produto com formato de flor estilizado */
         .product-img-box {
             flex-shrink: 0;
             width: 100px;
             height: 100px;
-            background-color: var(--white);
-            /* Clip-path cria a forma ondulada de flor vista na imagem */
+            background-color: var(--snow);
             clip-path: circle(50% at 50% 50%); 
             overflow: hidden;
             display: flex;
@@ -153,71 +283,150 @@
             font-size: 1.2rem;
             margin-bottom: 5px;
             color: var(--accent-color);
-            font-weight: 400;
+            font-weight: 600;
         }
 
         .product-desc {
             font-size: 0.9rem;
             opacity: 0.9;
             margin-bottom: 8px;
+            color: #e0d0c0;
         }
 
         .price-tag {
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1.3rem;
-            color: var(--price-color);
-        }
-
-        .weight-tag {
-            font-size: 0.8rem;
-            opacity: 0.7;
-            display: block;
+            color: var(--xmas-red); /* Preço em vermelho natalino */
+            background-color: #fff;
+            padding: 2px 8px;
+            border-radius: 8px;
+            display: inline-block;
+            transform: rotate(-2deg);
         }
 
         /* Rodapé */
         footer {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem 2rem;
             color: var(--card-bg);
             font-weight: bold;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(to top, rgba(255,255,255,0.2), transparent);
+        }
+        
+        footer p {
+            margin-bottom: 0.5rem;
         }
 
         /* Botão Flutuante do WhatsApp */
         .whatsapp-float {
             position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 20px;
-            right: 20px;
+            width: 65px;
+            height: 65px;
+            bottom: 25px;
+            right: 25px;
             background-color: #25d366;
             color: #FFF;
-            border-radius: 50px;
+            border-radius: 50%;
             text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 3px #999;
+            font-size: 35px;
+            box-shadow: 2px 2px 3px rgba(0,0,0,0.3);
             z-index: 100;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
             transition: all 0.3s;
+            border: 3px solid var(--white);
         }
 
         .whatsapp-float:hover {
-            background-color: #128C7E;
-            transform: scale(1.1);
+            background-color: var(--xmas-red); /* Fica vermelho no hover */
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .santa-hat-float {
+            position: absolute;
+            top: -22px;
+            left: -12px;
+            font-size: 35px;
+            color: var(--xmas-red);
+            transform: rotate(-20deg);
+            z-index: 101;
+            filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.3));
+        }
+
+        /* Mensagem de boas festas */
+        .holiday-message {
+            background-color: var(--xmas-red);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Placeholders para quando a imagem não carregar (apenas para visualização) */
+        img:after { 
+            content: "\f03e";
+            font-family: "Font Awesome 6 Free";
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #eee;
+            color: #ccc;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 2rem;
         }
 
     </style>
 </head>
 <body>
 
+    <!-- Neve caindo -->
+    <div class="snow-container" id="snowContainer">
+        <!-- Javascript vai preencher os flocos aqui -->
+    </div>
+
     <header class="header-wave">
+        <!-- Luzes de Natal -->
+        <div class="christmas-lights">
+            <span class="light-bulb"></span>
+            <span class="light-bulb"></span>
+            <span class="light-bulb"></span>
+            <span class="light-bulb"></span>
+            <span class="light-bulb"></span>
+            <span class="light-bulb"></span>
+            <span class="light-bulb"></span>
+            <span class="light-bulb"></span>
+            <span class="light-bulb"></span>
+            <span class="light-bulb"></span>
+            <span class="light-bulb"></span>
+            <span class="light-bulb"></span>
+        </div>
+
         <div class="logo-container">
-            <img src="logo.jpg" alt="Logo Pudim da Laura">
+            <i class="fa-solid fa-santa-hat santa-hat-logo"></i>
+            <!-- Mantive seus caminhos de imagem originais -->
+            <img src="logo.jpg" alt="Logo Pudim da Laura" onerror="this.onerror=null; this.src='https://placehold.co/150x150/5E3023/F4C430?text=Logo';">
         </div>
         <h1>Pudim da Laura</h1>
         <p class="subtitle">O sabor caseiro que você ama</p>
+        <div class="holiday-message"><i class="fa-solid fa-sleigh"></i> Especial de Natal</div>
     </header>
 
     <div class="main-container">
@@ -227,97 +436,89 @@
             
             <div class="product-card">
                 <div class="product-img-box">
-                    <img src="geladinho-pudim.jpg" alt="Geladinho de Pudim">
+                    <img src="geladinho-pudim.jpg" alt="Geladinho de Pudim" onerror="this.onerror=null; this.src='https://placehold.co/100x100/F4C430/5E3023?text=Pudim';">
                 </div>
                 <div class="product-info">
                     <h3>Geladinho de Pudim</h3>
-                    <p class="product-desc">Cremoso e refrescante, com o sabor autêntico do nosso pudim.</p>
+                    <p class="product-desc">Cremoso, com o sabor autêntico do nosso pudim.</p>
                     <span class="price-tag">R$ 10,00</span>
-                    <span class="weight-tag">Unidade</span>
                 </div>
             </div>
 
             <div class="product-card">
                 <div class="product-img-box">
-                    <img src="geladinho-morango.jpg" alt="Geladinho de Chocolate Branco com Morango">
+                    <img src="geladinho-morango.jpg" alt="Geladinho de Chocolate Branco com Morango" onerror="this.onerror=null; this.src='https://placehold.co/100x100/ffb7b2/5E3023?text=Morango';">
                 </div>
                 <div class="product-info">
                     <h3>Geladinho de Choc. Branco com Morango</h3>
-                    <p class="product-desc">Chocolate branco cremoso com pedaços suculentos de morango fresco.</p>
+                    <p class="product-desc">Chocolate branco com pedaços de morango.</p>
                     <span class="price-tag">R$ 10,00</span>
-                    <span class="weight-tag">Unidade</span>
                 </div>
             </div>
             
             <div class="product-card">
                 <div class="product-img-box">
-                    <img src="picole-branco.jpg" alt="Picolé de Pudim com Chocolate Branco Crocante">
+                    <img src="picole-branco.jpg" alt="Picolé de Pudim com Chocolate Branco Crocante" onerror="this.onerror=null; this.src='https://placehold.co/100x100/fff/5E3023?text=Picole';">
                 </div>
                 <div class="product-info">
                     <h3>Picolé de Pudim com Choc. Branco Crocante</h3>
-                    <p class="product-desc">A combinação perfeita do nosso pudim clássico com uma casquinha crocante de chocolate branco.</p>
+                    <p class="product-desc">Combinação perfeita do pudim com uma casquinha crocante.</p>
                     <span class="price-tag">R$ 14,00</span>
-                    <span class="weight-tag">Unidade</span>
                 </div>
             </div>
 
             <div class="product-card">
                 <div class="product-img-box">
-                    <img src="picole-chocolate.jpg" alt="Picolé de Pudim de Chocolate Meio Amargo">
+                    <img src="picole-chocolate.jpg" alt="Picolé de Pudim de Chocolate Meio Amargo" onerror="this.onerror=null; this.src='https://placehold.co/100x100/3e2723/fff?text=Choc';">
                 </div>
                 <div class="product-info">
                     <h3>Picolé de Pudim de Choc. Meio Amargo</h3>
-                    <p class="product-desc">Pudim de chocolate meio amargo intenso e sofisticado em formato de picolé.</p>
+                    <p class="product-desc">Pudim de chocolate meio amargo em formato de picolé.</p>
                     <span class="price-tag">R$ 14,00</span>
-                    <span class="weight-tag">Unidade</span>
                 </div>
             </div>
 
             <div class="product-card">
                 <div class="product-img-box">
-                    <img src="pudim.jpg" alt="Pudim de Leite Condensado">
+                    <img src="pudim.jpg" alt="Pudim de Leite Condensado" onerror="this.onerror=null; this.src='https://placehold.co/100x100/F4C430/5E3023?text=Pudim';">
                 </div>
                 <div class="product-info">
-                    <h3>Pudim de Leite Condensado</h3>
-                    <p class="product-desc">O clássico, lisinho e sem furinhos.</p>
+                    <h3>Pudim de Leite Condensado <i class="fa-solid fa-star" style="color: gold; font-size: 0.8rem;"></i></h3>
+                    <p class="product-desc">O clássico, lisinho e sem furinhos. Perfeito para a ceia!</p>
                     <span class="price-tag">R$ 60,00</span>
-                    <span class="weight-tag">Unidade</span>
                 </div>
             </div>
 
             <div class="product-card">
                 <div class="product-img-box">
-                    <img src="pudim-branco.jpg" alt="Pudim de Chocolate Branco">
+                    <img src="pudim-branco.jpg" alt="Pudim de Chocolate Branco" onerror="this.onerror=null; this.src='https://placehold.co/100x100/fff8e1/5E3023?text=Choc+B';">
                 </div>
                 <div class="product-info">
                     <h3>Pudim de Choc. Branco</h3>
                     <p class="product-desc">Com calda de morango artesanal.</p>
                     <span class="price-tag">R$ 85,00</span>
-                    <span class="weight-tag">Unidade</span>
                 </div>
             </div>
             
             <div class="product-card">
                 <div class="product-img-box">
-                    <img src="geladinho-nutella.jpg" alt="Geladinho de Ninho com Nutella">
+                    <img src="geladinho-nutella.jpg" alt="Geladinho de Ninho com Nutella" onerror="this.onerror=null; this.src='https://placehold.co/100x100/6d4c41/fff?text=Nutella';">
                 </div>
                 <div class="product-info">
                     <h3>Geladinho de Ninho com Nutella</h3>
-                    <p class="product-desc">Creme de leite Ninho com o delicioso sabor da Nutella® em cada gole.</p>
+                    <p class="product-desc">Creme de leite Ninho com o delicioso sabor da Nutella®.</p>
                     <span class="price-tag">R$ 10,00</span>
-                    <span class="weight-tag">Unidade</span>
                 </div>
             </div>
 
             <div class="product-card">
                 <div class="product-img-box">
-                    <img src="geladinho-maracuja.jpg" alt="Geladinho de Maracujá">
+                    <img src="geladinho-maracuja.jpg" alt="Geladinho de Maracujá" onerror="this.onerror=null; this.src='https://placehold.co/100x100/ffeb3b/5E3023?text=Maracuja';">
                 </div>
                 <div class="product-info">
                     <h3>Geladinho de Maracujá</h3>
-                    <p class="product-desc">Refrescante e tropical, feito com polpa de maracujá pura e natural.</p>
+                    <p class="product-desc">Refrescante e tropical, feito com polpa de maracujá pura.</p>
                     <span class="price-tag">R$ 10,00</span>
-                    <span class="weight-tag">Unidade</span>
                 </div>
             </div>
 
@@ -325,13 +526,40 @@
     </div>
 
     <footer>
-        <p>Feito com amor ❤️ Pudim da Laura</p>
+        <p><i class="fa-solid fa-gift"></i> Feito com amor ❤️ Pudim da Laura</p>
         <p>Entregas em Goianira e região</p>
+        <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.8;">Feliz Natal e um Próspero Ano Novo!</p>
     </footer>
 
     <a href="https://wa.me/5562996974686" class="whatsapp-float" target="_blank">
-        <svg fill="#fff" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="30px" height="30px"><path d="M 12.011719 2 C 6.5057187 2 2.0234844 6.478375 2.0214844 11.984375 C 2.0204844 13.744375 2.4814687 15.462563 3.3554688 16.984375 L 2 22 L 7.2324219 20.664062 C 8.6914219 21.459063 10.332063 21.877 12.013672 21.877 L 12.015625 21.877 C 17.521625 21.877 22.001953 17.395344 22.003906 11.888672 C 22.003906 9.2506719 20.976859 6.7686094 19.109375 4.9042969 C 17.241891 3.0379844 14.759719 2.0010469 12.011719 2 z M 12.013672 3.6699219 C 14.316672 3.6699219 16.398672 4.5445781 17.962891 6.1074219 C 19.529109 7.6722656 20.386719 9.7523281 20.384766 11.890625 C 20.382766 16.476625 16.634609 20.207031 12.015625 20.207031 C 10.518625 20.207031 9.0718594 19.829984 7.7871094 19.123047 L 7.4726562 18.951172 L 4.3984375 19.736328 L 5.2167969 16.744141 L 4.8828125 16.398438 C 4.0908125 15.138437 3.6877969 13.585547 3.6894531 11.986328 C 3.6914531 7.3983281 7.4286719 3.6699219 12.013672 3.6699219 z"/></svg>
+        <i class="fa-solid fa-santa-hat santa-hat-float"></i>
+        <i class="fa-brands fa-whatsapp"></i>
     </a>
+
+    <script>
+        // Script simples para gerar os flocos de neve
+        function createSnow() {
+            const container = document.getElementById('snowContainer');
+            const snowflakeCount = 20; // Quantidade de flocos
+
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                snowflake.innerHTML = '<i class="fa-regular fa-snowflake"></i>';
+                
+                // Posição aleatória e tempo de animação
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's'; // Entre 2 e 5 segundos
+                snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px'; // Tamanho variável
+                snowflake.style.opacity = Math.random();
+                
+                container.appendChild(snowflake);
+            }
+        }
+
+        // Iniciar neve ao carregar
+        window.addEventListener('load', createSnow);
+    </script>
 
 </body>
 </html>
